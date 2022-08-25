@@ -1,10 +1,16 @@
 import type { NextPage } from 'next';
-import UsersTable from '../components/user/table';
+import Link from 'next/link';
 
 const Home: NextPage = () => {
 
 	return (
-		<UsersTable />
+		<ul>
+			<li>
+				<Link href="/users">
+					<a>Users</a>
+				</Link>
+			</li>
+		</ul>
 	)
 }
 

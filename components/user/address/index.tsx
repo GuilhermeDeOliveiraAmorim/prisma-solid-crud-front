@@ -1,44 +1,51 @@
-import { Button, Flex, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import useGetAllUsers from '../../../src/hooks/useGetAllUsers';
 import { DeleteIcon, EditIcon, ViewIcon } from '@chakra-ui/icons';
+import { Button, Flex, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import Link from 'next/link';
+import IAddress from "../../../src/interfaces/IAddress";
 
-export default function UsersTable() {
+interface IUserAddressArr {
+    arrAddress: IAddress[] | undefined;
+}
 
-    const users = useGetAllUsers();
+export default function UserAddress(props: IUserAddressArr) {
+
+    const { arrAddress } = props;
 
     return (
         <TableContainer>
             <Table variant='striped' colorScheme='teal'>
                 <Thead>
                     <Tr>
-                        <Th>Name</Th>
-                        <Th>EMAIL</Th>
-                        <Th>PASSWORD</Th>
-                        <Th>CREATED AT</Th>
-                        <Th></Th>
+                        <Th>STREET</Th>
+                        <Th>NUMBER</Th>
+                        <Th>CITY</Th>
+                        <Th>STATE</Th>
+                        <Th>COUNTRY</Th>
+                        <Th>ZIP CODE</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {users.data?.map(user =>
-                        <Tr key={user.id}>
-                            <Td>{user.name}</Td>
-                            <Td>{user.email}</Td>
-                            <Td>{user.password}</Td>
-                            <Td>{user.created_at}</Td>
+                    {arrAddress?.map(add =>
+                        <Tr key={add.id}>
+                            <Td>{add.street}</Td>
+                            <Td>{add.street_number}</Td>
+                            <Td key={add.city.id}>{add.city.name}</Td>
+                            <Td key={add.state.id}>{add.state.name}</Td>
+                            <Td key={add.country.id}>{add.country.name}</Td>
+                            <Td>{add.zip_code}</Td>
                             <Td>
                                 <Flex gap={4}>
-                                    <Link href={`/users/view/${user.id}`}>
+                                    <Link href={`/user/view/${add.id}`}>
                                         <Button colorScheme='blue' size='xs'>
                                             <ViewIcon />
                                         </Button>
                                     </Link>
-                                    <Link href={`/users/edit/${user.id}`}>
+                                    <Link href={`/user/edit/${add.id}`}>
                                         <Button colorScheme='orange' size='xs'>
                                             <EditIcon />
                                         </Button>
                                     </Link>
-                                    <Link href={`/users/delete/${user.id}`}>
+                                    <Link href={`/user/delete/${add.id}`}>
                                         <Button colorScheme='red' size='xs'>
                                             <DeleteIcon />
                                         </Button>
